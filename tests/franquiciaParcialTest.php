@@ -7,7 +7,7 @@ require_once 'src/Colectivo.php';
 
 use PHPUnit\Framework\TestCase;
 
-class franqParcialTest extends TestCase{
+class franquiciaParcialTest extends TestCase{
 
     public function testBoletoMitadPrecio(){
         $tarjetaTest = new franquiciaParcial;

@@ -11,22 +11,18 @@ use PHPUnit\Framework\TestCase;
 
 
 class tarjetaTest extends TestCase{
+    
     public function testProbarTodoslosSaldos(){
         $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
 
-     for ($i = 0; $i < count($this->cargasPosibles); $i++) {
-        $carga = $this->cargasPosibles[$i];
-        probarSaldos($carga);
+        foreach ($cargasPosibles as $carga) {
+            $tarjetaTest = new Tarjeta;
+            $tarjetaTest->cargarTarjeta($carga);
+            $this->assertEquals($carga, $tarjetaTest->consultarSaldo());
         }
     }
 
-    public function probarSaldos($aCargar){
-         //Creamos una instancia de tarjeta para hacer pruebas
-         $tarjetaTest = new Tarjeta;
-         $tarjetaTest->cargarTarjeta($aCargar);
-         //Verifica que  se haya cargado correctamente
-        $this->assertEquals($aCargar, $tarjetaTest->consultarSaldo());
-    }
+    
 
     public function testCargarValoresNoValidos(){
         
@@ -77,8 +73,7 @@ class tarjetaTest extends TestCase{
         
         //Realizamos 3 viaje 
         for ($i = 0; $i < 3; $i++) {
-      
-        $tarjetaTest->hacerViaje(120);
+            $tarjetaTest->hacerViaje(120);
         }
 
         //Verifica si el saldo es de menos 210 que es el valor que le deberia quedar a la tarjeta
