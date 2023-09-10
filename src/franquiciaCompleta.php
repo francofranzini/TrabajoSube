@@ -5,7 +5,7 @@ define("COSTO_FIJO", 150);
 Class franquiciaCompleta extends Tarjeta {
 
     public function consultarSaldo(){
-        return COSTO_FIJO;
+        return $COSTO_FIJO;
     }
     public function hacerViaje($costo){
         $this->viajes += 1;

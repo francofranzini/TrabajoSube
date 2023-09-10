@@ -11,7 +11,7 @@ Class franquiciaParcial extends Tarjeta {
             echo "no se puede pagar el viaje \n";
             return FALSE;
            }
-       if ( $this->saldo < VALOR_VIAJE_MIN ) 
+       if ( $this->saldo < $VALOR_VIAJE_MIN ) 
            { 
            $this->viajeplus--; 
            }     
