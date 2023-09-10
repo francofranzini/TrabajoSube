@@ -1,6 +1,6 @@
 <?php
 namespace TrabajoSube;
-define("SALDO_NEG ", -120);
+
 
 class Tarjeta{
     public $saldo = 0;
@@ -32,7 +32,7 @@ class Tarjeta{
     }
 
     public function hacerViaje($costo){
-         if( $this->saldo < $SALDO_NEG ){
+         if( $this->saldo <  -$costo){
              echo "no se puede pagar el viaje \n";
              return FALSE;
             } 
