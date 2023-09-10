@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class tarjetaTest extends TestCase{
     public function testProbarTodoslosSaldos(){
-        public $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
+        $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
 
      for ($i = 0; $i < count($this->cargasPosibles); $i++) {
         $carga = $this->cargasPosibles[$i];
