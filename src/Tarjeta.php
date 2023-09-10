@@ -36,10 +36,6 @@ class Tarjeta{
              echo "no se puede pagar el viaje \n";
              return FALSE;
             } 
-        if ( $this->saldo < 120 ) 
-            { 
-            $this->viajeplus--; 
-            }     
         $this->saldo -= $costo;
         $this->viajes += 1;
         return TRUE; 
