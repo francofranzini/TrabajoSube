@@ -2,7 +2,8 @@
 namespace TrabajoSube;
 require 'Tarjeta.php';
 require 'Boleto.php';
-
+require 'franquiciaCompleta.php';
+require 'franquiciaParcial.php';
 class Colectivo{
 
     public $tarifa;
@@ -21,3 +22,5 @@ class Colectivo{
         }
     }
 }
+
+?>
