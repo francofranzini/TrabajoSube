@@ -10,7 +10,7 @@ require_once 'src/franquiciaParcial.php';
 use PHPUnit\Framework\TestCase;
 
 
-class ColectivoTest extends TestCase{
+class tarjetaTest extends TestCase{
     public function testProbarTodoslosSaldos(){
         public $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
 
@@ -67,6 +67,28 @@ class ColectivoTest extends TestCase{
         $tarjetaTest->cargarTarjeta(600);
         $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
         
+    }
+
+    public function testViajePlus()
+    {
+        $tarjetaTest = new Tarjeta;
+        
+        $tarjetaTest->cargarTarjeta(150);
+        
+        //Realizamos 3 viaje 
+        for ($i = 0; $i < 3; $i++) {
+      
+        $tarjetaTest->hacerViaje(120);
+        }
+
+        //Verifica si el saldo es de menos 210 que es el valor que le deberia quedar a la tarjeta
+        $this->assertEquals(-210, $tarjetaTest->consultarSaldo());
+        //Verifica que se realizaron 3 viajes
+        $this->assertEquals(3, $tarjetaTest->consultarViajes());
+
+        //Verifica que no pueda realizar mas viajes 
+        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
+
     }
 }
 ?>

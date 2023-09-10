@@ -27,6 +27,10 @@ class Tarjeta{
         return $this->saldo;
     }
 
+    public function consultarViajes(){
+        return $this->viajes;
+    }
+
     public function hacerViaje($costo){
          if( $this->saldo < $SALDO_NEG ){
              echo "no se puede pagar el viaje \n";
