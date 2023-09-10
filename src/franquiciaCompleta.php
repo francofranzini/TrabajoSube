@@ -1,7 +1,7 @@
 <?php
 namespace TrabajoSube;
 require 'Tarjeta.php';
-define("COSTO_FIJO", 150);
+define("COSTO_FIJO", 0);
 Class franquiciaCompleta extends Tarjeta {
 
     public function consultarSaldo(){
