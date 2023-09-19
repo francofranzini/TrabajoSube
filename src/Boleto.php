@@ -1,7 +1,11 @@
 <?php
 namespace TrabajoSube;
 class Boleto{
-    public $tarifa = 120;
+    private $hoy;
+
+    public function fecha(){
+        return $this->hoy;
+    }
 }
 
 ?>

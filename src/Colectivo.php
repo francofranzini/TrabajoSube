@@ -5,12 +5,7 @@ require 'Boleto.php';
 
 class Colectivo{
 
-    public $tarifa;
-
-    function __construct(){
-        $boleto = new Boleto;
-        $this->tarifa = $boleto->tarifa;
-    }
+    public $tarifa = 120;
 
     function pagarCon($tarjeta){
         if($tarjeta->consultarSaldo()>= $this->tarifa){
