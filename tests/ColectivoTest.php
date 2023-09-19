@@ -1,11 +1,7 @@
 <?php 
 
 namespace TrabajoSube;
-require_once 'src/Colectivo.php';
-require_once 'src/Tarjeta.php';
-require_once 'src/Boleto.php';
-//require_once 'src/franquiciaCompleta.php';
-require_once 'src/franquiciaParcial.php';
+
 use PHPUnit\Framework\TestCase;
 
 

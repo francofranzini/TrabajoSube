@@ -1,6 +1,6 @@
 <?php
 namespace TrabajoSube;
-require_once 'Tarjeta.php';
+
 define("COSTO_FIJO", 0);
 Class franquiciaCompleta extends Tarjeta {
 

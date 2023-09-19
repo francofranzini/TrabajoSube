@@ -1,8 +1,7 @@
 <?php 
 
 namespace TrabajoSube;
-//require 'src/Tarjeta.php';
-require 'src/franquiciaCompleta.php';
+
 
 
 use PHPUnit\Framework\TestCase;

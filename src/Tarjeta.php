@@ -3,10 +3,18 @@ namespace TrabajoSube;
 
 
 class Tarjeta{
-    public $saldo = 0;
-    public $viajes = 0;
-    public $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
+    protected $saldo = 0;
+    protected $viajes = 0;
+    protected $id;
+    protected $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
     
+    public function __construct(int $id = -1) {
+        $this->id = $id;
+    }
+
+    public function getID(){
+        return $this->id;
+    }
 
     public function cargarTarjeta($monto){
         

@@ -1,6 +1,5 @@
 <?php
 namespace TrabajoSube;
-require_once 'Tarjeta.php';
 
 
 class franquiciaParcial extends Tarjeta {
