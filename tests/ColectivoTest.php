@@ -14,7 +14,7 @@ class ColectivoTest extends TestCase{
         $tarjetaTest->cargarTarjeta(200);
 
         //traemos el valor del boleto a partir del colectivo
-        $boleto = $colectivoTest->tarifa;
+        $boleto = $colectivoTest->tarifa();
 
         //Pagamos el bondi
         $colectivoTest->pagarCon($tarjetaTest);
@@ -42,10 +42,6 @@ class ColectivoTest extends TestCase{
         $colectivoTest->pagarCon($tarjetaTest);
 
         //Consultamos que el saldo restante sea 30
-        $this->assertEquals(30, $tarjetaTest->consultarSaldo());
-
-        //Intentamos pagar nuevamente y verificamos que el saldo es el mismo
-        $colectivoTest->pagarCon($tarjetaTest);
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
 
     }

@@ -5,6 +5,8 @@ class Boleto{
     private $hoy;
     protected $tarjeta;
     protected $saldo;
+    protected $tipo;
+    protected $id;
     protected $linea;
 
     public function fecha(){
@@ -12,8 +14,9 @@ class Boleto{
     }
 
     public function __construct(Tarjeta $tarjeta, Colectivo $colectivo ){
+        $this->tarjeta = $tarjeta;
         $this->saldo = $tarjeta->consultarSaldo();
-        $this->tipo = tipoDeTarjeta($tarjeta);
+        $this->tipo = $this->tipoDeTarjeta($tarjeta);
         $this->linea = $colectivo->linea();
         $this->id = $tarjeta->getID();
         $this->fecha = date('d-m-Y', time());
@@ -27,6 +30,9 @@ class Boleto{
     }
     public function lineaColectivo($colectivo){
         return $colectivo->getLinea();
+    }
+    public function retornarBoleto(){
+        return array([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
     }
 
 }

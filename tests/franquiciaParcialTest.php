@@ -12,16 +12,16 @@ class franquiciaParcialTest extends TestCase{
         $colectivoTest = new Colectivo;
 
         $tarjetaTest->cargarTarjeta(150);
+        $this->assertEquals(150, $tarjetaTest->consultarSaldo());
 
         $colectivoTest->pagarCon($tarjetaTest);
-
         //De ser 90 el saldo entonces el viaje salio la mitad del boleto general 
         $this->assertEquals(90, $tarjetaTest->consultarSaldo());
 
         $colectivoTest->pagarCon($tarjetaTest);
 
-        //De ser 90 el saldo entonces el viaje salio la mitad del boleto general 
-        $this->assertEquals(90, $tarjetaTest->consultarSaldo());
+        //De ser 30 el saldo entonces el viaje salio la mitad del boleto general 
+        $this->assertEquals(30, $tarjetaTest->consultarSaldo());
     }
     
     public function testProbarViajePlus(){
