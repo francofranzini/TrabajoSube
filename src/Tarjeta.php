@@ -19,18 +19,19 @@ class Tarjeta{
     }
 
     public function cargarTarjeta($monto){
-        /*
-        if($this->saldo + $monto > 6600){
-            return ;
-        }*/
         if(in_array($monto, $this->cargasPosibles)){
-            if($this->saldo + $monto > 6600){
-                $this->$cargasPendientes=  ($this->saldo + $monto)-6600 
-            
-            /* falta terminar */    
-          
-          
-            return ;
+            if($this->saldo == 6600) $this->cargasPendientes += $monto;
+            if($this->saldo < 6600){
+                $this->saldo += $monto;
+                if($this->saldo > 6600){
+                    $this->cargasPendientes = $this->saldo - 6600;
+                    $this->saldo -= $this->cargasPendientes;
+                }
+            }
+
+            else{
+                echo "el saldo a cargar excede el maximo de 6600";
+            }
         }else{
             echo "no se puede cargar ese monto! \n";
         }

@@ -4,7 +4,7 @@ namespace TrabajoSube;
 
 Class franquiciaCompleta extends Tarjeta {
 
-    protected viajesGratis = 2; 
+    protected $viajesGratis = 2; 
     //  considero que no es necesario ya que con la iteracion 3 ya no puede viajar infinito
     
     /* public function consultarSaldo(){
