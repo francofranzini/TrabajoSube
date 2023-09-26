@@ -28,7 +28,7 @@ class franquiciaParcial extends Tarjeta {
         }
     }
 
-    public function viajarConMedioBoleto($costo){
+    protected function viajarConMedioBoleto($costo){
         if( $this->saldo < -$costo/2 ){
             echo "no se puede pagar el viaje \n";
             return FALSE;

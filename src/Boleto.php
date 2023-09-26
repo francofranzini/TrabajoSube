@@ -2,37 +2,39 @@
 namespace TrabajoSube;
 
 class Boleto{
-    private $hoy;
-    protected $tarjeta;
+    private $fecha;
     protected $saldo;
     protected $tipo;
     protected $id;
     protected $linea;
 
     public function fecha(){
-        return $this->hoy;
+        return $this->fecha;
     }
 
     public function __construct(Tarjeta $tarjeta, Colectivo $colectivo ){
-        $this->tarjeta = $tarjeta;
         $this->saldo = $tarjeta->consultarSaldo();
-        $this->tipo = $this->tipoDeTarjeta($tarjeta);
+        $this->tipo = get_class($tarjeta);
         $this->linea = $colectivo->linea();
         $this->id = $tarjeta->getID();
         $this->fecha = date('d-m-Y', time());
     }
 
-    public function saldoRestante($tarjeta){
-        return $tarjeta->consultarSaldo();
+    public function id(){
+        return $this->id;
     }
-    public function tipoDeTarjeta($tarjeta){
-        return get_class($tarjeta);
+
+    public function saldoRestante(){
+        return $this->saldo;
     }
-    public function lineaColectivo($colectivo){
-        return $colectivo->getLinea();
+    public function tipoDeTarjeta(){
+        return $this->tipo;
+    }
+    public function lineaColectivo(){
+        return $this->linea;
     }
     public function retornarBoleto(){
-        return array([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
+        echo([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
     }
 
 }
