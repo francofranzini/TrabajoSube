@@ -36,10 +36,10 @@ class franquiciaParcialTest extends TestCase{
             //tercerviaje -> noviaja dou 60
         }
 
-        //Verifica si el saldo es de menos 90 que es el valor que le deberia quedar a la tarjeta
-        $this->assertEquals(-90, $tarjetaTest->consultarSaldo());
-        //Verifica que se realizaron 3 viajes
-        $this->assertEquals(4, $tarjetaTest->consultarViajes());
+        //Si el saldo es 90, solo se hizo un viaje (150 - 120/2 = 90)
+        $this->assertEquals(90, $tarjetaTest->consultarSaldo());
+        //Verifica que se realizaron 1 viajes
+        $this->assertEquals(1, $tarjetaTest->consultarViajes());
 
         //Verifica que no pueda realizar mas viajes 
         $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));

@@ -16,6 +16,7 @@ class franquiciaParcial extends Tarjeta {
         }
         if($this->viajesConMedio == 0) return parent::hacerViaje($costo); 
         if($tiempoActual - $this->ultimoViajeConMedio < 5*60) return FALSE;
+        $this->ultimoViajeConMedio = $tiempoActual;
         return parent::hacerViaje($costo/2);
         
     }
