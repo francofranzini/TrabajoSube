@@ -48,18 +48,23 @@ class Tarjeta{
         return $this->viajes;
     }
 
+    public function consultarCargasPendientes(){
+        return $this->cargasPendientes;
+    } 
+
     public function hacerViaje($costo){
-         if( $this->saldo <  -$costo){
-             echo "no se puede pagar el viaje \n";
-             return FALSE;
-            } 
-       
+        if( $this->saldo <  -$costo){
+            echo "no se puede pagar el viaje \n";
+            return FALSE;
+        } 
+        $this->saldo -= $costo; 
+
         if($this->cargasPendientes > 0){
-            $this->cargasPendientes -= $costo;         
+            $dif = 6600 - $this->saldo;
+            $this->saldo += $dif;
+            $this->cargasPendientes -= $dif;
         }
-        else{
-           $this->saldo -= $costo;
-        }
+    
         
  
         $this->viajes += 1;

@@ -1,7 +1,11 @@
 <?php 
 
 namespace TrabajoSube;
-
+require_once 'src/Colectivo.php';
+require_once 'src/Tarjeta.php';
+require_once 'src/Boleto.php';
+//require_once 'src/franquiciaCompleta.php';
+require_once 'src/franquiciaParcial.php';
 use PHPUnit\Framework\TestCase;
 
 
@@ -15,14 +19,14 @@ class ColectivoTest extends TestCase{
         $tarjetaTest->cargarTarjeta(200);
 
         //traemos el valor del boleto a partir del colectivo
-        $boleto = $colectivoTest->tarifa();
+        $tarifa = $colectivoTest->tarifa();
 
         //Pagamos el bondi
         $colectivoTest->pagarCon($tarjetaTest);
 
         //Verificar que:
         //- se este cargando correctamente la tarifa
-        $this->assertEquals($boleto, 120);
+        $this->assertEquals($tarifa, 120);
         //- el saldo se reduzca correctamente
         $this->assertEquals(80, $tarjetaTest->consultarSaldo());
     }
@@ -30,6 +34,7 @@ class ColectivoTest extends TestCase{
         //Instancia de colectivo
         $colectivoTest = new Colectivo;
         //Creamos una instancia de tarjeta para hacer pruebas
+
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(100);

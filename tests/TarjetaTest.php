@@ -84,5 +84,49 @@ class tarjetaTest extends TestCase{
         $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
 
     }
+
+    public function testCargasPendientes()
+    {
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
+        
+        $tarjetaTest->cargarTarjeta(4000);
+        $tarjetaTest->cargarTarjeta(2000);
+        $tarjetaTest->cargarTarjeta(600);
+        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        
+        $tarjetaTest->cargarTarjeta(600);
+        $this->assertEquals(600, $tarjetaTest->consultarCargasPendientes());
+        $tarjetaTest->cargarTarjeta(150);
+        $this->assertEquals(750, $tarjetaTest->consultarCargasPendientes());
+        $tarjetaTest->cargarTarjeta(200);
+        $this->assertEquals(950, $tarjetaTest->consultarCargasPendientes());
+        $tarjetaTest->cargarTarjeta(1300);
+        $this->assertEquals(2250, $tarjetaTest->consultarCargasPendientes());
+
+        //PROBAR QUE PASA UNA VEZ QUE VIAJAS
+    }
+    public function testCargarSaldoPendiente(){
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
+        $colectivoTest = new Colectivo(144);
+        
+        $tarjetaTest->cargarTarjeta(4000);
+        $tarjetaTest->cargarTarjeta(2000);
+        $tarjetaTest->cargarTarjeta(600);
+        //SALDO EN 6600
+
+        $tarjetaTest->cargarTarjeta(600);
+        $this->assertEquals(600, $tarjetaTest->consultarCargasPendientes());
+
+        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $colectivoTest->pagarCon($tarjetaTest);
+        //Saldo de la tarjeta deberia ser el mismo si pagamos y recargamos
+        //las cargas pendientes
+        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        //tendria que haber reducido el saldoPendiente en 120
+        $this->assertEquals(480, $tarjetaTest->consultarCargasPendientes());
+
+    }
 }
 ?>
