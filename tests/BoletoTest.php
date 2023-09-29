@@ -8,7 +8,8 @@ class BoletoTest extends TestCase{
 
     public function testCargarBoleto(){
         $colectivoTest = new Colectivo(144);
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
 
 
         //verificar que el colecctivo guarde bien su linea, para pasarlo al boleto
@@ -24,7 +25,7 @@ class BoletoTest extends TestCase{
         //verificar que la id de la tarjeta sea la que corresponde
         $this->assertEquals($tarjetaTest->getID(), $boletoTest->id());
         
-        $tarjetaMF = new franquiciaParcial;
+        $tarjetaMF = new franquiciaParcial(1,$tiempoReal);
         $boletoMF = new Boleto($tarjetaMF, $colectivoTest);
         //verificar que el boleto guarde bien la linea
         $this->assertEquals($colectivoTest->linea(), $boletoMF->lineaColectivo());
@@ -35,7 +36,7 @@ class BoletoTest extends TestCase{
         //verificar que la id de la tarjeta sea la que corresponde
         $this->assertEquals($tarjetaMF->getID(), $boletoMF->id());
         
-        $tarjetaFC = new franquiciaCompleta;
+        $tarjetaFC = new franquiciaCompleta(1,$tiempoReal);
         $boletoFC = new Boleto($tarjetaFC, $colectivoTest);
         //verificar que el boleto guarde bien la linea
         $this->assertEquals($colectivoTest->linea(), $boletoFC->lineaColectivo());

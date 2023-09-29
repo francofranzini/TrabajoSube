@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 class franquiciaParcialTest extends TestCase{
 
     public function testBoletoMitadPrecio(){
-        $tarjetaTest = new franquiciaParcial;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new franquiciaParcial(1,$tiempoReal);
         $colectivoTest = new Colectivo;
 
         $tarjetaTest->cargarTarjeta(150);
@@ -24,7 +25,8 @@ class franquiciaParcialTest extends TestCase{
     }
     
     public function testProbarViajePlus(){
-        $tarjetaTest = new franquiciaParcial;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new franquiciaParcial(1,$tiempoReal);
         
         $tarjetaTest->cargarTarjeta(150);
         

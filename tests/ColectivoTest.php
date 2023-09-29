@@ -10,7 +10,8 @@ class ColectivoTest extends TestCase{
         //Instancia de colectivo
         $colectivoTest = new Colectivo;
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(200);
 
         //traemos el valor del boleto a partir del colectivo
@@ -29,7 +30,8 @@ class ColectivoTest extends TestCase{
         //Instancia de colectivo
         $colectivoTest = new Colectivo;
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(100);
 
         //Verifica que no se haya cargado debido a que no se puede cargar 100 pesos

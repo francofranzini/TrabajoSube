@@ -11,7 +11,8 @@ class tarjetaTest extends TestCase{
         $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
 
         foreach ($cargasPosibles as $carga) {
-            $tarjetaTest = new Tarjeta;
+            $tiempoReal = new TiempoReal();
+            $tarjetaTest = new Tarjeta(1,$tiempoReal);
             $tarjetaTest->cargarTarjeta($carga);
             $this->assertEquals($carga, $tarjetaTest->consultarSaldo());
         }
@@ -22,7 +23,8 @@ class tarjetaTest extends TestCase{
     public function testCargarValoresNoValidos(){
         
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(100);
 
         //Verifica que no se haya cargado debido a que no se puede cargar 100 pesos
@@ -46,7 +48,8 @@ class tarjetaTest extends TestCase{
     public function testCargarDeMas(){
         
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(600);
         $tarjetaTest->cargarTarjeta(2000);
         $tarjetaTest->cargarTarjeta(4000);
@@ -62,7 +65,8 @@ class tarjetaTest extends TestCase{
 
     public function testViajePlus()
     {
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         
         $tarjetaTest->cargarTarjeta(150);
         

@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 class franqCompletaTest extends TestCase{
 
     public function testProbarViaje(){
-        $tarjetaTest = new franquiciaCompleta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(150);
         //Verificamos si puede viajar 1 vez
         $this->assertEquals(TRUE, $tarjetaTest->hacerViaje(120));
@@ -22,7 +23,8 @@ class franqCompletaTest extends TestCase{
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
     }
     public function testPagarViajes(){
-        $tarjetaTest = new franquiciaCompleta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(150);
         $tarjetaTest->hacerViaje(120);
         $tarjetaTest->hacerViaje(120);

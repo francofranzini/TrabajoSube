@@ -58,9 +58,10 @@ class Tarjeta{
             $this->cargasPendientes -= $costo;         
         }
         else{
-            $this->saldo -= $costo;
+           $this->saldo -= $costo;
         }
-
+        
+ 
         $this->viajes += 1;
         return TRUE; 
     }
