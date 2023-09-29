@@ -71,5 +71,31 @@ class franquiciaParcialTest extends TestCase{
         $this->assertEquals(TRUE, $tarjetaTest->hacerViaje(120));
        
     }
+
+    public function testLimiteViajesPlus(){
+        $tiempoFalso= new TiempoFalso();
+        $tarjetaTest = new franquiciaParcial(1,$tiempoFalso);
+        
+        $tarjetaTest->cargarTarjeta(600);
+        
+        //Realizamos 5 viaje 
+        for ($i = 0; $i < 6; $i++) {
+            $tarjetaTest->hacerViaje(120);
+            $tiempoFalso->avanzar(300);
+           
+        }
+        //Verificamos que luego de realizar 4 viajes 
+        // Ya cobre el valor correcto 
+        //Cargamos 600
+        // Hicimos 6 viajes  
+        // 600 - (60*4+120*2) = 120 
+        $this->assertEquals(120, $tarjetaTest->consultarSaldo());
+        //Verifica que se realizaron 1 viajes
+        $this->assertEquals(0, $tarjetaTest->viajemedio());
+        $this->assertEquals(6, $tarjetaTest->consultarViajes());
+
+        //Verifica que no pueda realizar mas viajes 
+       //$this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
+    }
 }
 ?>
