@@ -5,14 +5,15 @@ interface TiempoInterface {
     public function time();
 
 }
-class TiempoReal  implements TiempoInterface 
+
+class TiempoReal implements TiempoInterface 
 {
     public function time(){
         return time();
     }
 }
 
-class TiempoFalso   implements TiempoInterface 
+class TiempoFalso implements TiempoInterface 
 {
     protected $tiempo; 
     public function __construct($iniciarEn = 0){
