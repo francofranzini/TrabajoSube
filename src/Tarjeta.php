@@ -29,9 +29,9 @@ class Tarjeta{
                 }
             }
 
-            else{
+            /*else{
                 echo "el saldo a cargar excede el maximo de 6600";
-            }
+            }*/
         }else{
             echo "no se puede cargar ese monto! \n";
         }
@@ -51,7 +51,14 @@ class Tarjeta{
              echo "no se puede pagar el viaje \n";
              return FALSE;
             } 
-        $this->saldo -= $costo;
+       
+        if($this->cargasPendientes > 0){
+            $this->cargasPendientes -= $costo;         
+        }
+        else{
+            $this->saldo -= $costo;
+        }
+
         $this->viajes += 1;
         return TRUE; 
     }
