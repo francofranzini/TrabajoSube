@@ -47,6 +47,29 @@ class franquiciaParcialTest extends TestCase{
         $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
     }
 
+    public function testProbarTiempoViajePlus(){
+        $tiempoFalso= new TiempoFalso();
+        $tarjetaTest = new franquiciaParcial(1,$tiempoFalso);
+        $tarjetaTest->cargarTarjeta(150);
+        //Realizo un viaje 
+        //$tiempoFalso->avanzar(120);
+        $tarjetaTest->hacerViaje(120);
+        $this->assertEquals(90, $tarjetaTest->consultarSaldo());
+        //Avanzo el tiempo
+        $tiempoFalso->avanzar(120);
+        //No pasan mas de 5 minutos no se puede viajar 
+        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
 
+        $tiempoFalso->avanzar(500);
+        //Se puede viajar porque ya pasaron mas de 5 minutos 
+        $this->assertEquals(TRUE, $tarjetaTest->hacerViaje(120));
+        // En este caso no ya que no paso el tiempo 
+        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
+        
+        $tiempoFalso->avanzar(300);
+        //Aca ya si porque el tiempo volvio a avanzar
+        $this->assertEquals(TRUE, $tarjetaTest->hacerViaje(120));
+       
+    }
 }
 ?>

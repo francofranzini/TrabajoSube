@@ -24,7 +24,11 @@ class BoletoTest extends TestCase{
         $this->assertEquals(get_class($tarjetaTest), $boletoTest->tipoDeTarjeta());
         //verificar que la id de la tarjeta sea la que corresponde
         $this->assertEquals($tarjetaTest->getID(), $boletoTest->id());
+         //verificar que la fecha de la tarjeta sea la que corresponde
+        //$this->assertEquals(date('d-m-Y', $tiempoReal->tiempo->time()), $boletoTest->fecha());
+        $this->assertEquals(date('d-m-Y', time()), $boletoTest->fecha());
         
+
         $tarjetaMF = new franquiciaParcial(1,$tiempoReal);
         $boletoMF = new Boleto($tarjetaMF, $colectivoTest);
         //verificar que el boleto guarde bien la linea
@@ -34,7 +38,7 @@ class BoletoTest extends TestCase{
         //verificar que el tipo de tarjeta sea el que corresponde
         $this->assertEquals(get_class($tarjetaMF), $boletoMF->tipoDeTarjeta());
         //verificar que la id de la tarjeta sea la que corresponde
-        $this->assertEquals($tarjetaMF->getID(), $boletoMF->id());
+        $this->assertEquals(date('d-m-Y', time()),$boletoMF->fecha() );
         
         $tarjetaFC = new franquiciaCompleta(1,$tiempoReal);
         $boletoFC = new Boleto($tarjetaFC, $colectivoTest);
@@ -46,8 +50,12 @@ class BoletoTest extends TestCase{
         $this->assertEquals(get_class($tarjetaFC), $boletoFC->tipoDeTarjeta());
         //verificar que la id de la tarjeta sea la que corresponde
         $this->assertEquals($tarjetaFC->getID(), $boletoFC->id());
-    
+         //verificar que la fecha de la tarjeta sea la que corresponde
+        $this->assertEquals(date('d-m-Y', time()),$boletoFC->fecha() );
+        
             
     }   
+
+
 }
 ?>
