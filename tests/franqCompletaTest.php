@@ -32,5 +32,19 @@ class franqCompletaTest extends TestCase{
         //verificamos que haya viajado 2 veces y luego con tarifa normal
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
     }
+
+    public function testPasoDelDia(){
+        $tiempoFalso = new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        
+        $tarjetaTest->cargarTarjeta(600);
+        for ($i = 0; $i < 6; $i++) {
+            $tarjetaTest->hacerViaje(120);
+            $tiempoFalso->avanzar(300);
+           
+        }
+        //En menos de 24 horas no se puede viajar 
+        $this->assertEquals(120, $tarjetaTest->consultarSaldo());
+    }
 }       
 ?>
