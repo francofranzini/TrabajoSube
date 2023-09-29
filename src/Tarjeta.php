@@ -9,9 +9,11 @@ class Tarjeta{
     protected $saldoNegativo;
     protected $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
     protected $cargasPendientes= 0;
-
-    public function __construct(int $id = -1) {
+    protected $tiempo; 
+   
+    public function __construct(int $id = -1, TiempoInterface $tiempo ) {
         $this->id = $id;
+        $this->tiempo  = $tiempo;
     }
 
     public function getID(){

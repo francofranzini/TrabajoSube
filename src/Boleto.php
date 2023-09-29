@@ -7,7 +7,7 @@ class Boleto{
     protected $tipo;
     protected $id;
     protected $linea;
-
+  
     public function fecha(){
         return $this->fecha;
     }

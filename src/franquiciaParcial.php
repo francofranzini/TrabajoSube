@@ -9,7 +9,7 @@ class franquiciaParcial extends Tarjeta {
 
     public function hacerViaje($costo)
     {
-        $tiempoActual= time();
+        $tiempoActual= $this->tiempo->time();
         if ($tiempoActual - $this->ultimoViajeConMedio >= 24 * 60 * 60) {
             // Reiniciar los viajes con medio Boleto 
             $this->viajesConMedio = 4;

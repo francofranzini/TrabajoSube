@@ -9,7 +9,7 @@ Class franquiciaCompleta extends Tarjeta {
     protected $ultimoViajeGratis = 0;
 
     public function hacerViaje($costo) {
-        $tiempoActual= time();
+        $tiempoActual= $this->tiempo->time();
 
         // Verificar si ha pasado un día desde el último viaje
         if ($tiempoActual - $this->ultimoViajeGratis >= 24 * 60 * 60) {
