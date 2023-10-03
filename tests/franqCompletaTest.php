@@ -11,6 +11,7 @@ class franqCompletaTest extends TestCase{
     public function testProbarViaje(){
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
+        $this->assertEquals(1, $tarjetaTest->getID());
         $tarjetaTest->cargarTarjeta(150);
         //Verificamos si puede viajar 1 vez
         $this->assertEquals(TRUE, $tarjetaTest->hacerViaje(120));

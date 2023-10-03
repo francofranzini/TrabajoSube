@@ -50,17 +50,35 @@ class tarjetaTest extends TestCase{
         //Creamos una instancia de tarjeta para hacer pruebas
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new Tarjeta(1,$tiempoReal);
+        $this->assertEquals(1, $tarjetaTest->getID());
+        
         $tarjetaTest->cargarTarjeta(600);
         $tarjetaTest->cargarTarjeta(2000);
         $tarjetaTest->cargarTarjeta(4000);
-
         //Verificamos que se haya cargado correctamente:
         $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
 
         //Intentamos cargar en el excedente y verificamos que siga igual
         $tarjetaTest->cargarTarjeta(600);
         $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+    }
+    public function testCargarDeMas2(){
         
+        //Creamos una instancia de tarjeta para hacer pruebas
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
+        $this->assertEquals(1, $tarjetaTest->getID());
+        
+        $tarjetaTest->cargarTarjeta(4000);
+        //saldo = 4000
+        $tarjetaTest->cargarTarjeta(2000);
+        //saldo = 6000
+        $tarjetaTest->cargarTarjeta(4000);
+        //saldo = 6600 y cargasPendientes = 3400
+        //Verificamos que se haya cargado correctamente:
+        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(3400, $tarjetaTest->consultarCargasPendientes());
+
     }
 
     public function testViajePlus()

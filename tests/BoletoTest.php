@@ -11,7 +11,6 @@ class BoletoTest extends TestCase{
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new Tarjeta(1,$tiempoReal);
 
-
         //verificar que el colecctivo guarde bien su linea, para pasarlo al boleto
         $this->assertEquals(144, $colectivoTest->linea());
         
@@ -28,8 +27,28 @@ class BoletoTest extends TestCase{
         //$this->assertEquals(date('d-m-Y', $tiempoReal->tiempo->time()), $boletoTest->fecha());
         $this->assertEquals(date('d-m-Y', time()), $boletoTest->fecha());
         
+            
+    }
+    public function testDevolverBoleto(){
+        $colectivoTest = new Colectivo(144);
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
+        $boletoTest = new Boleto($tarjetaTest, $colectivoTest);
+        //([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
+        $boletoImpreso = $boletoTest->retornarBoleto();
+        $this->assertEquals(get_class($tarjetaTest), $boletoImpreso[1]);
+        $this->assertEquals($tarjetaTest->getID(), $boletoImpreso[2]);
+        $this->assertEquals($tarjetaTest->consultarSaldo(), $boletoImpreso[3]);
+        $this->assertEquals($colectivoTest->linea(), $boletoImpreso[4]);
+    }
 
+
+    public function testCargarBoletoMF(){
+        $colectivoTest = new Colectivo(144);
+        $tiempoReal = new TiempoReal();
         $tarjetaMF = new franquiciaParcial(1,$tiempoReal);
+
+
         $boletoMF = new Boleto($tarjetaMF, $colectivoTest);
         //verificar que el boleto guarde bien la linea
         $this->assertEquals($colectivoTest->linea(), $boletoMF->lineaColectivo());
@@ -39,8 +58,14 @@ class BoletoTest extends TestCase{
         $this->assertEquals(get_class($tarjetaMF), $boletoMF->tipoDeTarjeta());
         //verificar que la id de la tarjeta sea la que corresponde
         $this->assertEquals(date('d-m-Y', time()),$boletoMF->fecha() );
-        
+    }
+
+    public function testCargarBoletoFC(){
+        $colectivoTest = new Colectivo(144);
+        $tiempoReal = new TiempoReal();
         $tarjetaFC = new franquiciaCompleta(1,$tiempoReal);
+
+
         $boletoFC = new Boleto($tarjetaFC, $colectivoTest);
         //verificar que el boleto guarde bien la linea
         $this->assertEquals($colectivoTest->linea(), $boletoFC->lineaColectivo());
@@ -52,9 +77,7 @@ class BoletoTest extends TestCase{
         $this->assertEquals($tarjetaFC->getID(), $boletoFC->id());
          //verificar que la fecha de la tarjeta sea la que corresponde
         $this->assertEquals(date('d-m-Y', time()),$boletoFC->fecha() );
-        
-            
-    }   
+    }
 
 
 }

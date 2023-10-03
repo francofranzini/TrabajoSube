@@ -39,7 +39,6 @@ class Tarjeta{
         }
     }
 
-
     public function consultarSaldo(){
         return $this->saldo;
     }

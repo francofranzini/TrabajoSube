@@ -34,7 +34,7 @@ class Boleto{
         return $this->linea;
     }
     public function retornarBoleto(){
-        echo([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
+        return([$this->fecha, $this->tipo, $this->id, $this->saldo, $this->linea,]);
     }
 
 }
