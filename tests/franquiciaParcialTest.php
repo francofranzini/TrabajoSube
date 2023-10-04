@@ -10,7 +10,7 @@ class franquiciaParcialTest extends TestCase{
     public function testBoletoMitadPrecio(){
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new franquiciaParcial(1,$tiempoReal);
-        $colectivoTest = new Colectivo;
+        $colectivoTest = new Colectivo(144);
 
         $tarjetaTest->cargarTarjeta(150);
         $this->assertEquals(150, $tarjetaTest->consultarSaldo());
@@ -78,11 +78,10 @@ class franquiciaParcialTest extends TestCase{
         
         $tarjetaTest->cargarTarjeta(600);
         
-        //Realizamos 5 viaje 
+        //Realizamos 6 viaje 
         for ($i = 0; $i < 6; $i++) {
             $tarjetaTest->hacerViaje(120);
             $tiempoFalso->avanzar(300);
-           
         }
         //Verificamos que luego de realizar 4 viajes 
         // Ya cobre el valor correcto 
@@ -96,6 +95,35 @@ class franquiciaParcialTest extends TestCase{
 
         //Verifica que no pueda realizar mas viajes 
        //$this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
+    }
+    public function testViajarCasiMedianoche(){
+        $tiempoFalso= new TiempoFalso();
+        $tarjetaTest = new franquiciaParcial(1,$tiempoFalso);
+        $ct = new Colectivo(144);
+        //23:45
+        $tiempoFalso->avanzar(85700);
+        $tarjetaTest->cargarTarjeta(600);
+        //Saldo = 600, viajesmedio = 4
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        //Saldo = 540, viajesmedio = 3
+        //No pasaron 5 min, no puede viajar. 
+        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje($ct->tarifa()));
+        $tiempoFalso->avanzar(300);
+        //23:50 deberia poder viajar
+        $this->assertEquals(TRUE, $tarjetaTest->hacerViaje($ct->tarifa()));
+        //Saldo = 480, viajesmedio = 2
+        $tiempoFalso->avanzar(300);
+        //23:50
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        //Saldo = 420, viajesmedio = 1
+        $this->assertEquals(1, $tarjetaTest->viajemedio());
+
+        //PASAMOS LA MEDIANOCHE
+        $tiempoFalso->avanzar(700);
+        //Al hacer el siguiente viaje, viajesmedio = 4, pero como viajamos, 3.
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        $this->assertEquals(3, $tarjetaTest->viajemedio());
+        
     }
 }
 ?>

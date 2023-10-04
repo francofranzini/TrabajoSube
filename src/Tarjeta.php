@@ -1,7 +1,6 @@
 <?php
 namespace TrabajoSube;
 
-
 class Tarjeta{
     protected $saldo = 0;
     protected $viajes = 0;
@@ -52,19 +51,22 @@ class Tarjeta{
     } 
 
     public function hacerViaje($costo){
+
         if( $this->saldo <  -$costo){
             echo "no se puede pagar el viaje \n";
             return FALSE;
         } 
-        $this->saldo -= $costo; 
+
+        $this->saldo -= $costo;
 
         if($this->cargasPendientes > 0){
-            $dif = 6600 - $this->saldo;
-            $this->saldo += $dif;
-            $this->cargasPendientes -= $dif;
+            $this->saldo += $this->cargasPendientes;
+            if($this->saldo >= 6600){
+                $dif = $this->saldo - 6600;
+                if($dif > 0) $this->saldo -= $dif;
+                $this->cargasPendientes = $dif;
+            }
         }
-    
-        
  
         $this->viajes += 1;
         return TRUE; 
