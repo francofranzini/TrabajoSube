@@ -1,27 +1,42 @@
 <?php
 namespace TrabajoSube;
 
-
 class Tarjeta{
-    public $saldo = 0;
-    public $viajes = 0;
-    public $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
-    
+    protected $saldo = 0;
+    protected $viajes = 0;
+    protected $id;
+    protected $saldoNegativo;
+    protected $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
+    protected $cargasPendientes= 0;
+    protected $tiempo; 
+   
+    public function __construct(int $id = -1, TiempoInterface $tiempo ) {
+        $this->id = $id;
+        $this->tiempo  = $tiempo;
+    }
+
+    public function getID(){
+        return $this->id;
+    }
 
     public function cargarTarjeta($monto){
-        
-        if($this->saldo + $monto > 6600){
-            echo "no se puede cargar ".$monto." ya que excede los 6600 pesos \n";
-            return ;
-        }
         if(in_array($monto, $this->cargasPosibles)){
-            $this->saldo += $monto;
-            return ;
+            if($this->saldo == 6600) $this->cargasPendientes += $monto;
+            if($this->saldo < 6600){
+                $this->saldo += $monto;
+                if($this->saldo > 6600){
+                    $this->cargasPendientes = $this->saldo - 6600;
+                    $this->saldo -= $this->cargasPendientes;
+                }
+            }
+
+            /*else{
+                echo "el saldo a cargar excede el maximo de 6600";
+            }*/
         }else{
             echo "no se puede cargar ese monto! \n";
         }
     }
-
 
     public function consultarSaldo(){
         return $this->saldo;
@@ -31,19 +46,31 @@ class Tarjeta{
         return $this->viajes;
     }
 
+    public function consultarCargasPendientes(){
+        return $this->cargasPendientes;
+    } 
+
     public function hacerViaje($costo){
-         if( $this->saldo <  -$costo){
-             echo "no se puede pagar el viaje \n";
-             return FALSE;
-            } 
+
+        if( $this->saldo <  -$costo){
+            echo "no se puede pagar el viaje \n";
+            return FALSE;
+        } 
+
         $this->saldo -= $costo;
+
+        if($this->cargasPendientes > 0){
+            $this->saldo += $this->cargasPendientes;
+            if($this->saldo >= 6600){
+                $dif = $this->saldo - 6600;
+                if($dif > 0) $this->saldo -= $dif;
+                $this->cargasPendientes = $dif;
+            }
+        }
+ 
         $this->viajes += 1;
         return TRUE; 
     }
-   // no se fran si es necesario porque si viajeplus esta declarada como public 
-    //desde colectivo puedo acceder directamente desde colectivo
-    // public function viajePlus(){
-     //   return $this->viajeplus;
-   // }
+  
 }
 ?>

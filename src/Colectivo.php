@@ -1,25 +1,26 @@
 <?php
 namespace TrabajoSube;
-require 'Tarjeta.php';
-require 'Boleto.php';
-//require 'franquiciaCompleta.php';
-require 'franquiciaParcial.php';
+
 class Colectivo{
 
-    public $tarifa;
+    private $tarifa = 120;
+    private $linea;
 
-    function __construct(){
-        $boleto = new Boleto;
-        $this->tarifa = $boleto->tarifa;
+    public function __construct(int $linea = -1) {
+        $this->linea = $linea;
+    }
+    public function linea(){
+        return $this->linea;
+    }
+    public function tarifa(){
+        return $this->tarifa;
     }
 
-    function pagarCon($tarjeta){
-        if($tarjeta->consultarSaldo()>= $this->tarifa){
-            $tarjeta->hacerViaje($this->tarifa);
-        }else{
-            echo "No tiene saldo suficiente";
-            return;
-        }
+    public function pagarCon($tarjeta){
+       
+        if($tarjeta->hacerViaje($this->tarifa)){
+            $boleto = new Boleto($tarjeta, $this);
+        };
     }
 }
 

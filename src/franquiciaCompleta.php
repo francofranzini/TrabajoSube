@@ -1,16 +1,43 @@
 <?php
 namespace TrabajoSube;
-require_once 'Tarjeta.php';
-define("COSTO_FIJO", 0);
+
+
 Class franquiciaCompleta extends Tarjeta {
 
-    public function consultarSaldo(){
-        return $COSTO_FIJO;
+    protected $viajesGratis = 2; 
+    
+    protected $ultimoViajeGratis = 0;
+
+    public function hacerViaje($costo) {
+        $tiempoActual= $this->tiempo->time();
+
+        // Verificar si ha pasado un día desde el último viaje
+        if (intval($this->ultimoViajeGratis/86400) < intval($this->tiempo->time()/86400))  {
+            // Reiniciar los viajes gratis
+            $this->viajesGratis = 2;
+        }
+
+        if ($this->viajesGratis > 0) {
+            // Realizar un viaje gratis
+            $this->viajesGratis--;
+            //Almacena cuando se hizo ese ultimo viaje
+            $this->ultimoViajeGratis = $tiempoActual;
+            $this->viajes += 1;
+             return TRUE;
+        } 
+        else 
+        {
+            return parent::hacerViaje($costo);
+        }
+        
     }
-    public function hacerViaje($costo){
-        $this->viajes += 1;
-        return TRUE; 
+
+    public function viajesGratis(){
+        return $this->viajesGratis;
     }
 }
+
+
+
 
 ?>

@@ -14,18 +14,19 @@ class ColectivoTest extends TestCase{
         //Instancia de colectivo
         $colectivoTest = new Colectivo;
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(200);
 
         //traemos el valor del boleto a partir del colectivo
-        $boleto = $colectivoTest->tarifa;
+        $tarifa = $colectivoTest->tarifa();
 
         //Pagamos el bondi
         $colectivoTest->pagarCon($tarjetaTest);
 
         //Verificar que:
         //- se este cargando correctamente la tarifa
-        $this->assertEquals($boleto, 120);
+        $this->assertEquals($tarifa, 120);
         //- el saldo se reduzca correctamente
         $this->assertEquals(80, $tarjetaTest->consultarSaldo());
     }
@@ -33,7 +34,9 @@ class ColectivoTest extends TestCase{
         //Instancia de colectivo
         $colectivoTest = new Colectivo;
         //Creamos una instancia de tarjeta para hacer pruebas
-        $tarjetaTest = new Tarjeta;
+
+        $tiempoReal = new TiempoReal();
+        $tarjetaTest = new Tarjeta(1,$tiempoReal);
         $tarjetaTest->cargarTarjeta(100);
 
         //Verifica que no se haya cargado debido a que no se puede cargar 100 pesos
@@ -46,10 +49,6 @@ class ColectivoTest extends TestCase{
         $colectivoTest->pagarCon($tarjetaTest);
 
         //Consultamos que el saldo restante sea 30
-        $this->assertEquals(30, $tarjetaTest->consultarSaldo());
-
-        //Intentamos pagar nuevamente y verificamos que el saldo es el mismo
-        $colectivoTest->pagarCon($tarjetaTest);
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
 
     }
