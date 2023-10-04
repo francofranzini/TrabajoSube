@@ -47,5 +47,34 @@ class franqCompletaTest extends TestCase{
         //En menos de 24 horas no se puede viajar 
         $this->assertEquals(120, $tarjetaTest->consultarSaldo());
     }
+
+    public function testViajarCasiMedianoche(){
+        $tiempoFalso= new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $ct = new Colectivo(144);
+        //23:45
+        $tiempoFalso->avanzar(85700);
+        $tarjetaTest->cargarTarjeta(600);
+        //Saldo = 600, viajesgratis = 2
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        //Saldo = 600, viajesgratis = 1
+       
+        $this->assertEquals(600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(1, $tarjetaTest->viajesGratis());
+        $this->assertEquals(TRUE, $tarjetaTest->hacerViaje($ct->tarifa()));
+        //Saldo = 480, viajesGratis = 0
+        $tiempoFalso->avanzar(300);
+        //23:50
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        //Saldo = 480 por hacer viajes sin viajes gratis tarifa normal
+        $this->assertEquals(0, $tarjetaTest->viajesGratis());
+        $this->assertEquals(480, $tarjetaTest->consultarSaldo());
+        //PASAMOS LA MEDIANOCHE
+        $tiempoFalso->avanzar(700);
+        //Al hacer el siguiente viaje, viajesGratis = 2, pero como viajamos, 1.
+        $tarjetaTest->hacerViaje($ct->tarifa());
+        $this->assertEquals(1, $tarjetaTest->viajesGratis());
+        
+    }
 }       
 ?>

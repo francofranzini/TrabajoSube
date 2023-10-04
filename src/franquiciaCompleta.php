@@ -12,7 +12,7 @@ Class franquiciaCompleta extends Tarjeta {
         $tiempoActual= $this->tiempo->time();
 
         // Verificar si ha pasado un día desde el último viaje
-        if ($tiempoActual - $this->ultimoViajeGratis >= 24 * 60 * 60) {
+        if (intval($this->ultimoViajeGratis/86400) < intval($this->tiempo->time()/86400))  {
             // Reiniciar los viajes gratis
             $this->viajesGratis = 2;
         }
@@ -30,6 +30,10 @@ Class franquiciaCompleta extends Tarjeta {
             return parent::hacerViaje($costo);
         }
         
+    }
+
+    public function viajesGratis(){
+        return $this->viajesGratis;
     }
 }
 
