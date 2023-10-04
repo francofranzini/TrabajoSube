@@ -9,8 +9,9 @@ use PHPUnit\Framework\TestCase;
 class franqCompletaTest extends TestCase{
 
     public function testProbarViaje(){
-        $tiempoReal = new TiempoReal();
-        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
+        $tiempoFalso = new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
         $this->assertEquals(1, $tarjetaTest->getID());
         $tarjetaTest->cargarTarjeta(150);
         //Verificamos si puede viajar 1 vez
@@ -24,8 +25,10 @@ class franqCompletaTest extends TestCase{
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
     }
     public function testPagarViajes(){
-        $tiempoReal = new TiempoReal();
-        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
+        $tiempoFalso = new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
+
         $tarjetaTest->cargarTarjeta(150);
         $tarjetaTest->hacerViaje(120);
         $tarjetaTest->hacerViaje(120);
@@ -37,7 +40,7 @@ class franqCompletaTest extends TestCase{
     public function testPasoDelDia(){
         $tiempoFalso = new TiempoFalso();
         $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
-        
+        $tiempoFalso->avanzar(3600*8);
         $tarjetaTest->cargarTarjeta(600);
         for ($i = 0; $i < 6; $i++) {
             $tarjetaTest->hacerViaje(120);
@@ -49,11 +52,12 @@ class franqCompletaTest extends TestCase{
     }
 
     public function testViajarCasiMedianoche(){
-        $tiempoFalso= new TiempoFalso();
+        $tiempoFalso = new TiempoFalso();
         $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
+
         $ct = new Colectivo(144);
-        //23:45
-        $tiempoFalso->avanzar(85700);
+        
         $tarjetaTest->cargarTarjeta(600);
         //Saldo = 600, viajesgratis = 2
         $tarjetaTest->hacerViaje($ct->tarifa());
@@ -64,13 +68,13 @@ class franqCompletaTest extends TestCase{
         $this->assertEquals(TRUE, $tarjetaTest->hacerViaje($ct->tarifa()));
         //Saldo = 480, viajesGratis = 0
         $tiempoFalso->avanzar(300);
-        //23:50
+        
         $tarjetaTest->hacerViaje($ct->tarifa());
         //Saldo = 480 por hacer viajes sin viajes gratis tarifa normal
         $this->assertEquals(0, $tarjetaTest->viajesGratis());
         $this->assertEquals(480, $tarjetaTest->consultarSaldo());
         //PASAMOS LA MEDIANOCHE
-        $tiempoFalso->avanzar(700);
+        $tiempoFalso->avanzar(3600*24);
         //Al hacer el siguiente viaje, viajesGratis = 2, pero como viajamos, 1.
         $tarjetaTest->hacerViaje($ct->tarifa());
         $this->assertEquals(1, $tarjetaTest->viajesGratis());

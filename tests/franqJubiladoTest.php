@@ -7,9 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class franqJubiladoTest extends TestCase{
     public function testViajarJubilados(){
-        $tiempoReal = new TiempoReal();
+        $tiempoFalso = new TiempoFalso();
         $colectivoTest = new Colectivo;
-        $tarjetaJubilado = new franquiciaJubilados(1,$tiempoReal);
+        $tarjetaJubilado = new franquiciaJubilados(1,$tiempoFalso);
+
+        $tiempoFalso->avanzar(3600*8);
 
         $tarjetaJubilado->cargarTarjeta(150);
         $this->assertEquals(150, $tarjetaJubilado->consultarSaldo());
@@ -23,4 +25,12 @@ class franqJubiladoTest extends TestCase{
         $this->assertEquals(150, $tarjetaJubilado->consultarSaldo());
 
     }
+
+   /* public function testViajarFueraDeHorario(){
+        $tiempoFalso = new TiempoFalso();
+        $colectivoTest = new Colectivo;
+        $tarjetaJubilado = new franquiciaJubilados(1,$tiempFalsol);
+        $this->assertEquals(150, $tarjetaJubilado->consultarSaldo());
+    }
+    */
 }
