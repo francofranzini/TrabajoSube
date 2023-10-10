@@ -5,10 +5,10 @@ namespace TrabajoSube;
 use PHPUnit\Framework\TestCase;
 
 
-class ColectivoTest extends TestCase{
+class InterurbanoTest extends TestCase{
     public function testPagarConSaldo(){
         //Instancia de colectivo
-        $colectivoTest = new Colectivo;
+        $colectivoTest = new Interurbano;
         //Creamos una instancia de tarjeta para hacer pruebas
         $tiempoReal = new TiempoReal();
         $tarjetaTest = new Tarjeta(1,$tiempoReal);
@@ -22,13 +22,13 @@ class ColectivoTest extends TestCase{
 
         //Verificar que:
         //- se este cargando correctamente la tarifa
-        $this->assertEquals($tarifa, 120);
+        $this->assertEquals($tarifa, 185);
         //- el saldo se reduzca correctamente
-        $this->assertEquals(80, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(15, $tarjetaTest->consultarSaldo());
     }
     public function testPagarSinSaldo(){
         //Instancia de colectivo
-        $colectivoTest = new Colectivo;
+        $colectivoTest = new Interurbano;
         //Creamos una instancia de tarjeta para hacer pruebas
 
         $tiempoReal = new TiempoReal();
@@ -44,8 +44,8 @@ class ColectivoTest extends TestCase{
         //Pagamos el bondi
         $colectivoTest->pagarCon($tarjetaTest);
 
-        //Consultamos que el saldo restante sea 30
-        $this->assertEquals(30, $tarjetaTest->consultarSaldo());
+        //Consultamos que el saldo restante sea -35
+        $this->assertEquals(-35, $tarjetaTest->consultarSaldo());
 
     }
   
