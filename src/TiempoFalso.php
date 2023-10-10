@@ -7,6 +7,7 @@ class TiempoFalso implements TiempoInterface
     protected $dias = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
     protected $diaSemana; 
     protected $hora; 
+    protected $mes; 
 
     public function __construct($iniciarEn = 1){
         $this->tiempo = $iniciarEn;
@@ -26,6 +27,16 @@ class TiempoFalso implements TiempoInterface
 
     public function dia(){
         return $this->diaSemana;
+
+        $this->mes = date('F', $this->tiempo);
+    }
+   
+    public function avanzarDias($dias){
+        $this->avanzar($dias*24*60*60);    
+    }
+    
+    public function mes(){
+        return $this->mes;
     }
 
     public function hora(){
@@ -34,3 +45,4 @@ class TiempoFalso implements TiempoInterface
 }
 
 ?>
+
