@@ -155,13 +155,13 @@ class tarjetaTest extends TestCase{
         //Realizamos 24 viajes de 150 pesos para confirmar que todos se hacen al mismo costo
         // Y cargamos el mismo costo 
         // Es decir al finalizar el for el saldo restante tiene que ser 0
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 29; $i++) {
             $tarjetaTest->cargarTarjeta(150);
             $tarjetaTest->hacerViaje(150);
         }
         $this->assertEquals(0, $tarjetaTest->consultarSaldo());
-        //Confirmamos que se hayan realizado 24 viajes
-        $this->assertEquals(30, $tarjetaTest->consultarViajes());
+        //Confirmamos que se hayan realizado 29 viajes
+        $this->assertEquals(29, $tarjetaTest->consultarViajes());
         
         //$tarjetaTest->cargarTarjeta((150));
         //Realizamos una carga de 800 y realizamos un viaje de 1000 por lo que 
@@ -169,19 +169,18 @@ class tarjetaTest extends TestCase{
         $tarjetaTest->cargarTarjeta((800));
         $tarjetaTest->hacerViaje(1000);
         $this->assertEquals(0, $tarjetaTest->consultarSaldo());
-        $this->assertEquals(31, $tarjetaTest->consultarViajes());
+        $this->assertEquals(30, $tarjetaTest->consultarViajes());
 
         //Cargamos la tarjeta con el 80 porciento de descuento en un viaje de 1000 
         //por lo que la tarjeta deberia quedar en 0
         //
-        for ($i = 0; $i < 49; $i++) {
-        $tarjetaTest->cargarTarjeta(800);
-        $tarjetaTest->hacerViaje(1000);
-     
+        for ($i = 0; $i < 50; $i++) {
+            $tarjetaTest->cargarTarjeta(800);
+            $tarjetaTest->hacerViaje(1000);
         }
         $this->assertEquals(0, $tarjetaTest->consultarSaldo());
 
-          //Realizamos una carga de 750 y realizamos un viaje de 1000 por lo que 
+        //Realizamos una carga de 750 y realizamos un viaje de 1000 por lo que 
         // El saldo tendria que quedar en 0
         $tarjetaTest->cargarTarjeta(500);
         $tarjetaTest->cargarTarjeta(250);
@@ -199,6 +198,20 @@ class tarjetaTest extends TestCase{
             }
             $this->assertEquals(0, $tarjetaTest->consultarSaldo());
        
+    }
+    public function testReiniciarViajes(){
+        $tiempoFalso= new TiempoFalso();
+        $tarjetaTest = new Tarjeta(1,$tiempoFalso);
+
+        $tarjetaTest->cargarTarjeta(500);
+        $tarjetaTest->hacerViaje(120);
+        $tarjetaTest->hacerViaje(120);
+        $this->assertEquals(2, $tarjetaTest->consultarViajes());
+
+        //Avanzamos un mes
+        $tiempoFalso->avanzarDias(31);
+        $tarjetaTest->hacerViaje(120);
+        $this->assertEquals(1, $tarjetaTest->consultarViajes());
     }
 }
 ?>

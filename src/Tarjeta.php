@@ -85,7 +85,7 @@ class Tarjeta{
 
     public function usarDescuento($costo){
         $mesActual = $this->tiempo->mes();
-        if( $this->viajes <= 29  )  
+        if( $this->viajes < 29  )
             {
                 $this->saldo -= $costo;
             }
