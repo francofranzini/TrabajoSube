@@ -59,13 +59,14 @@ class Tarjeta{
         } 
 
         $claseActual = get_class($this);
-        if ($claseActual === 'Tarjeta') 
+      //  echo "soy $claseActual ";
+        if ($claseActual == 'TrabajoSube\Tarjeta') 
         {   
             $this->reiniciarViajes();
             $this->usarDescuento($costo);
         }
         else
-        {
+        {   
             $this->saldo -= $costo;
         }
 
@@ -82,18 +83,29 @@ class Tarjeta{
         return TRUE; 
     }
 
-    protected function usarDescuento($costo){
+    public function usarDescuento($costo){
         $mesActual = $this->tiempo->mes();
-        if( $this->viajes < 30  )  $this->saldo -= $costo;
-        elseif ($this->viajes < 80) {
-            $this->saldo -= ($costo*0.8);
-        } 
+        if( $this->viajes <= 29  )  
+            {
+                $this->saldo -= $costo;
+            }
+        
         else {
-            $this->saldo -= ($costo*0.75);
-        } 
+            if($this->viajes < 80) {
+            $this->saldo -= ($costo*0.8);
+            } 
+           else{
+                $this->saldo -= ($costo*0.75);
+            } 
+        }
+
+      
+
         $this->mesDeUso = $mesActual;
     }
-    protected function reiniciarViajes(){
+
+    public function reiniciarViajes(){
+    
         $mesActual = $this->tiempo->mes();
         if($this->mesDeUso != $mesActual)
         {
