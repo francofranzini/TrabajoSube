@@ -9,8 +9,9 @@ use PHPUnit\Framework\TestCase;
 class franqCompletaTest extends TestCase{
 
     public function testProbarViaje(){
-        $tiempoReal = new TiempoReal();
-        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
+        $tiempoFalso = new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
         $this->assertEquals(1, $tarjetaTest->getID());
         $tarjetaTest->cargarTarjeta(150);
         //Verificamos si puede viajar 1 vez
@@ -24,8 +25,10 @@ class franqCompletaTest extends TestCase{
         $this->assertEquals(30, $tarjetaTest->consultarSaldo());
     }
     public function testPagarViajes(){
-        $tiempoReal = new TiempoReal();
-        $tarjetaTest = new franquiciaCompleta(1,$tiempoReal);
+        $tiempoFalso = new TiempoFalso();
+        $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
+
         $tarjetaTest->cargarTarjeta(150);
         $tarjetaTest->hacerViaje(120);
         $tarjetaTest->hacerViaje(120);
@@ -37,7 +40,7 @@ class franqCompletaTest extends TestCase{
     public function testPasoDelDia(){
         $tiempoFalso = new TiempoFalso();
         $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
-        
+        $tiempoFalso->avanzar(3600*8);
         $tarjetaTest->cargarTarjeta(600);
         for ($i = 0; $i < 6; $i++) {
             $tarjetaTest->hacerViaje(120);
@@ -49,11 +52,12 @@ class franqCompletaTest extends TestCase{
     }
 
     public function testViajarCasiMedianoche(){
-        $tiempoFalso= new TiempoFalso();
+        $tiempoFalso = new TiempoFalso();
         $tarjetaTest = new franquiciaCompleta(1,$tiempoFalso);
+        $tiempoFalso->avanzar(3600*8);
+
         $ct = new Colectivo(144);
-        //23:45
-        $tiempoFalso->avanzar(85700);
+        
         $tarjetaTest->cargarTarjeta(600);
         //Saldo = 600, viajesgratis = 2
         $tarjetaTest->hacerViaje($ct->tarifa());
@@ -64,17 +68,65 @@ class franqCompletaTest extends TestCase{
         $this->assertEquals(TRUE, $tarjetaTest->hacerViaje($ct->tarifa()));
         //Saldo = 480, viajesGratis = 0
         $tiempoFalso->avanzar(300);
-        //23:50
+        
         $tarjetaTest->hacerViaje($ct->tarifa());
         //Saldo = 480 por hacer viajes sin viajes gratis tarifa normal
         $this->assertEquals(0, $tarjetaTest->viajesGratis());
         $this->assertEquals(480, $tarjetaTest->consultarSaldo());
         //PASAMOS LA MEDIANOCHE
-        $tiempoFalso->avanzar(700);
+        $tiempoFalso->avanzar(3600*24);
         //Al hacer el siguiente viaje, viajesGratis = 2, pero como viajamos, 1.
         $tarjetaTest->hacerViaje($ct->tarifa());
         $this->assertEquals(1, $tarjetaTest->viajesGratis());
         
     }
+    public function testViajarFueraDeHorario(){
+        $tiempoFalso = new TiempoFalso();
+        $colectivoTest = new Colectivo;
+        $tarjetaJubilado = new franquiciaCompleta(1,$tiempoFalso);
+        //Seteamos el tiempo a la 5 de la mañana es decir paga el boleto normal
+        $tiempoFalso->avanzar(3600*5);
+        $tarjetaJubilado->cargarTarjeta(150);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(30, $tarjetaJubilado->consultarSaldo());
+
+        //Avanzamos 5 horas mas por lo que son las 10 de la mañana se puede viajar gratis 
+        $tiempoFalso->avanzar(3600*5);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(30, $tarjetaJubilado->consultarSaldo());
+
+        //Avanzamos 13 horas por lo que seran las 23hs por lo que tendra que pagar el boleto 
+        //Tendra que tener -90
+        $tiempoFalso->avanzar(3600*13);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(-90, $tarjetaJubilado->consultarSaldo());
+    }
+
+    //Test para verificar que no viaje un sabado o un domingo
+    public function testViajarSabDom(){
+        $tiempoFalso = new TiempoFalso();
+        $colectivoTest = new Colectivo;
+        $tarjetaJubilado = new franquiciaCompleta(1,$tiempoFalso);
+        
+        // Puede viajar gratis son las 8 am de un jueves 
+        $tiempoFalso->avanzar(3600*8);
+        $tarjetaJubilado->cargarTarjeta(150);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(150, $tarjetaJubilado->consultarSaldo());
+
+        //Tendra que pagar porque son las 8 de la mañana del Sabado 
+        // ==> saldo = 30 
+        $tiempoFalso->avanzar(86400*2);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(30, $tarjetaJubilado->consultarSaldo());
+
+         //Tendra que pagar porque son las 8 de la mañana del Domingo 
+        // ==> saldo = -90 
+        $tiempoFalso->avanzar(86400);
+        $tarjetaJubilado->hacerViaje(120);
+        $this->assertEquals(-90, $tarjetaJubilado->consultarSaldo());
+
+    }
+    
 }       
 ?>

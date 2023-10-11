@@ -9,10 +9,14 @@ class Tarjeta{
     protected $cargasPosibles = array(150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000);
     protected $cargasPendientes= 0;
     protected $tiempo; 
-   
+    //Almacena los dias que no se podra utilizar la franquicia
+    protected $diasSinFranquicia = array( "Saturday", "Sunday");
+    protected $mesDeUso; //Almacena el ultimo mes en el que se uso la tarjeta 
+
     public function __construct(int $id = -1, TiempoInterface $tiempo ) {
         $this->id = $id;
         $this->tiempo  = $tiempo;
+        $this->mesDeUso = $this->tiempo->mes();
     }
 
     public function getID(){
@@ -51,13 +55,22 @@ class Tarjeta{
     } 
 
     public function hacerViaje($costo){
-
+        
         if( $this->saldo <  -$costo){
             echo "no se puede pagar el viaje \n";
             return FALSE;
         } 
 
-        $this->saldo -= $costo;
+        $claseActual = get_class($this);
+        if ($claseActual == 'TrabajoSube\Tarjeta') 
+        {   
+            $this->reiniciarViajes();
+            $this->usarDescuento($costo);
+        }
+        else
+        {   
+            $this->saldo -= $costo;
+        }
 
         if($this->cargasPendientes > 0){
             $this->saldo += $this->cargasPendientes;
@@ -67,10 +80,34 @@ class Tarjeta{
                 $this->cargasPendientes = $dif;
             }
         }
- 
+        
         $this->viajes += 1;
         return TRUE; 
     }
-  
+
+    public function usarDescuento($costo){
+        if( $this->viajes < 29  )
+            {
+                $this->saldo -= $costo;
+            }
+        
+        else {
+            if($this->viajes < 80) {
+            $this->saldo -= ($costo*0.8);
+            } 
+           else{
+                $this->saldo -= ($costo*0.75);
+            } 
+        }
+    }
+
+    public function reiniciarViajes(){
+    
+        $mesActual = $this->tiempo->mes();
+        if($this->mesDeUso != $mesActual)
+        {
+            $this->viajes = 0;
+        }
+    }
 }
 ?>
