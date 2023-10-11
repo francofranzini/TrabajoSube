@@ -3,7 +3,7 @@ namespace TrabajoSube;
 
 
 Class Interurbano extends Colectivo {
-    protected $tarifa = 182;
+    protected $tarifa = 184;
 }
 
 

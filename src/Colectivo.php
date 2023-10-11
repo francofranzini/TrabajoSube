@@ -3,8 +3,8 @@ namespace TrabajoSube;
 
 class Colectivo{
 
-    private $tarifa = 120;
-    private $linea;
+    protected $tarifa = 120;
+    protected $linea;
 
     public function __construct(int $linea = -1) {
         $this->linea = $linea;

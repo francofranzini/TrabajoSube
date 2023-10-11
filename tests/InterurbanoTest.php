@@ -22,9 +22,9 @@ class InterurbanoTest extends TestCase{
 
         //Verificar que:
         //- se este cargando correctamente la tarifa
-        $this->assertEquals($tarifa, 185);
+        $this->assertEquals($tarifa, 184);
         //- el saldo se reduzca correctamente
-        $this->assertEquals(15, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(16, $tarjetaTest->consultarSaldo());
     }
     public function testPagarSinSaldo(){
         //Instancia de colectivo
@@ -45,7 +45,7 @@ class InterurbanoTest extends TestCase{
         $colectivoTest->pagarCon($tarjetaTest);
 
         //Consultamos que el saldo restante sea -35
-        $this->assertEquals(-35, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(-34, $tarjetaTest->consultarSaldo());
 
     }
   
