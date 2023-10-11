@@ -23,16 +23,16 @@ class TiempoFalso implements TiempoInterface
         $this->tiempo += $segundos;
         $this->diaSemana = date('l', $this->tiempo); 
         $this->hora = date('G', $this->tiempo);
+        $this->mes = date('F', $this->tiempo);
     }
 
     public function dia(){
         return $this->diaSemana;
 
-        $this->mes = date('F', $this->tiempo);
     }
    
     public function avanzarDias($dias){
-        $this->avanzar($dias*24*60*60);    
+        $this->avanzar($dias*24*60*60);
     }
     
     public function mes(){

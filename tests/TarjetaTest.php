@@ -209,8 +209,10 @@ class tarjetaTest extends TestCase{
         $this->assertEquals(2, $tarjetaTest->consultarViajes());
 
         //Avanzamos un mes
+        //SOLUCIONAR ERROR NO SE REINICIAN LOS VIAJES
         $tiempoFalso->avanzarDias(31);
         $tarjetaTest->hacerViaje(120);
+
         $this->assertEquals(1, $tarjetaTest->consultarViajes());
     }
 }

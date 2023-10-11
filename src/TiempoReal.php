@@ -14,6 +14,9 @@ class TiempoReal implements TiempoInterface
     public function hora(){
         return date('G', time());
     }
+    public function mes(){
+        return date('F', time());
+    }
 }
 
 

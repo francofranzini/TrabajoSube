@@ -11,12 +11,12 @@ class Tarjeta{
     protected $tiempo; 
     //Almacena los dias que no se podra utilizar la franquicia
     protected $diasSinFranquicia = array( "Saturday", "Sunday");
-    
     protected $mesDeUso; //Almacena el ultimo mes en el que se uso la tarjeta 
 
     public function __construct(int $id = -1, TiempoInterface $tiempo ) {
         $this->id = $id;
         $this->tiempo  = $tiempo;
+        $this->mesDeUso = $this->tiempo->mes();
     }
 
     public function getID(){
@@ -55,14 +55,13 @@ class Tarjeta{
     } 
 
     public function hacerViaje($costo){
-
+        
         if( $this->saldo <  -$costo){
             echo "no se puede pagar el viaje \n";
             return FALSE;
         } 
 
         $claseActual = get_class($this);
-      //  echo "soy $claseActual ";
         if ($claseActual == 'TrabajoSube\Tarjeta') 
         {   
             $this->reiniciarViajes();
@@ -81,13 +80,12 @@ class Tarjeta{
                 $this->cargasPendientes = $dif;
             }
         }
- 
+        
         $this->viajes += 1;
         return TRUE; 
     }
 
     public function usarDescuento($costo){
-        $mesActual = $this->tiempo->mes();
         if( $this->viajes < 29  )
             {
                 $this->saldo -= $costo;
@@ -101,10 +99,6 @@ class Tarjeta{
                 $this->saldo -= ($costo*0.75);
             } 
         }
-
-      
-
-        $this->mesDeUso = $mesActual;
     }
 
     public function reiniciarViajes(){
