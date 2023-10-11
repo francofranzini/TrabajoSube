@@ -1,6 +1,6 @@
 <?php
 namespace TrabajoSube;
-
+require_once('variables.php');
 class Tarjeta{
     protected $saldo = 0;
     protected $viajes = 0;
