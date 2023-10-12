@@ -1,7 +1,7 @@
 <?php 
 
 namespace TrabajoSube;
-require_once('src\variables.php');
+
 use PHPUnit\Framework\TestCase;
 
 

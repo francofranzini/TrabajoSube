@@ -1,9 +1,9 @@
 <?php
 namespace TrabajoSube;
-
+require_once('variables.php');
 class Colectivo{
 
-    protected $tarifa = 120;
+    protected $tarifa = TARIFA;
     protected $linea;
 
     public function __construct(int $linea = -1) {
