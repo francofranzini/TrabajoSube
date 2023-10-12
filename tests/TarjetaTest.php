@@ -60,7 +60,7 @@ class tarjetaTest extends TestCase{
 
         //Intentamos cargar en el excedente y verificamos que siga igual
         $tarjetaTest->cargarTarjeta(600);
-        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(MAX_CARGA, $tarjetaTest->consultarSaldo());
     }
     public function testCargarDeMas2(){
         
@@ -76,8 +76,8 @@ class tarjetaTest extends TestCase{
         $tarjetaTest->cargarTarjeta(4000);
         //saldo = 6600 y cargasPendientes = 3400
         //Verificamos que se haya cargado correctamente:
-        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
-        $this->assertEquals(3400, $tarjetaTest->consultarCargasPendientes());
+        $this->assertEquals(MAX_CARGA, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(4000+2000+4000 - MAX_CARGA, $tarjetaTest->consultarCargasPendientes());
 
     }
 
@@ -90,16 +90,16 @@ class tarjetaTest extends TestCase{
         
         //Realizamos 3 viaje 
         for ($i = 0; $i < 3; $i++) {
-            $tarjetaTest->hacerViaje(120);
+            $tarjetaTest->hacerViaje(TARIFA);
         }
 
         //Verifica si el saldo es de menos 210 que es el valor que le deberia quedar a la tarjeta
-        $this->assertEquals(-210, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(150 - 3*TARIFA, $tarjetaTest->consultarSaldo());
         //Verifica que se realizaron 3 viajes
         $this->assertEquals(3, $tarjetaTest->consultarViajes());
 
         //Verifica que no pueda realizar mas viajes 
-        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(120));
+        $this->assertEquals(FALSE, $tarjetaTest->hacerViaje(TARIFA));
 
     }
 
@@ -111,7 +111,7 @@ class tarjetaTest extends TestCase{
         $tarjetaTest->cargarTarjeta(4000);
         $tarjetaTest->cargarTarjeta(2000);
         $tarjetaTest->cargarTarjeta(600);
-        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(MAX_CARGA, $tarjetaTest->consultarSaldo());
         
         $tarjetaTest->cargarTarjeta(600);
         $this->assertEquals(600, $tarjetaTest->consultarCargasPendientes());
@@ -137,11 +137,11 @@ class tarjetaTest extends TestCase{
         $tarjetaTest->cargarTarjeta(600);
         $this->assertEquals(600, $tarjetaTest->consultarCargasPendientes());
 
-        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(MAX_CARGA, $tarjetaTest->consultarSaldo());
         $colectivoTest->pagarCon($tarjetaTest);
         //Saldo de la tarjeta deberia ser el mismo si pagamos y recargamos
         //las cargas pendientes
-        $this->assertEquals(6600, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(MAX_CARGA, $tarjetaTest->consultarSaldo());
         //tendria que haber reducido el saldoPendiente en 120
         $this->assertEquals(480, $tarjetaTest->consultarCargasPendientes());
 
@@ -204,14 +204,14 @@ class tarjetaTest extends TestCase{
         $tarjetaTest = new Tarjeta(1,$tiempoFalso);
 
         $tarjetaTest->cargarTarjeta(500);
-        $tarjetaTest->hacerViaje(120);
-        $tarjetaTest->hacerViaje(120);
+        $tarjetaTest->hacerViaje(TARIFA);
+        $tarjetaTest->hacerViaje(TARIFA);
         $this->assertEquals(2, $tarjetaTest->consultarViajes());
 
         //Avanzamos un mes
         //SOLUCIONAR ERROR NO SE REINICIAN LOS VIAJES
         $tiempoFalso->avanzarDias(31);
-        $tarjetaTest->hacerViaje(120);
+        $tarjetaTest->hacerViaje(TARIFA);
 
         $this->assertEquals(1, $tarjetaTest->consultarViajes());
     }

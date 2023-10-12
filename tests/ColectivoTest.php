@@ -22,10 +22,10 @@ class ColectivoTest extends TestCase{
 
         //Verificar que:
         //- se este cargando correctamente la tarifa
-        $this->assertEquals($tarifa, 120);
+        $this->assertEquals($tarifa, TARIFA);
         //- el saldo se reduzca correctamente
        // $this->assertEquals(1, $tarjetaTest->consultarViajes());
-        $this->assertEquals(80, $tarjetaTest->consultarSaldo());
+        $this->assertEquals(200 - TARIFA, $tarjetaTest->consultarSaldo());
     }
     public function testPagarSinSaldo(){
         //Instancia de colectivo
@@ -41,12 +41,12 @@ class ColectivoTest extends TestCase{
 
         //Damos una carga valida
         $tarjetaTest->cargarTarjeta(150);
-
+        $saldoAntes = $tarjetaTest->consultarSaldo();
         //Pagamos el bondi
         $colectivoTest->pagarCon($tarjetaTest);
 
-        //Consultamos que el saldo restante sea 30
-        $this->assertEquals(30, $tarjetaTest->consultarSaldo());
+        //Consultamos que el saldo restante sea con la tarifa restada
+        $this->assertEquals($saldoAntes - TARIFA, $tarjetaTest->consultarSaldo());
 
     }
   
